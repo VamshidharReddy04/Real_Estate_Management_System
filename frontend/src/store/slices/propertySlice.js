@@ -34,10 +34,11 @@ export const fetchProperties = createAsyncThunk(
   async (params = {}, { rejectWithValue }) => {
     try {
       const queryString = buildQueryString(params);
-      const relativeUrl = `/api/properties${queryString ? `?${queryString}` : ""}`;
+      const apiUrl = import.meta.env.VITE_API_URL || '/api';
+      const url = `${apiUrl}/properties${queryString ? `?${queryString}` : ""}`;
 
       try {
-        return await fetchJson(relativeUrl);
+        return await fetchJson(url);
       } catch (fetchError) {
         if (!import.meta.env.DEV) {
           throw fetchError;
@@ -67,7 +68,8 @@ export const fetchProperty = createAsyncThunk(
   "properties/fetchOne",
   async (id, { rejectWithValue }) => {
     try {
-      const res = await fetchJson(`/api/properties/${id}`);
+      const apiUrl = import.meta.env.VITE_API_URL || '/api';
+      const res = await fetchJson(`${apiUrl}/properties/${id}`);
       return res;
     } catch (err) {
       if (import.meta.env.DEV) {
@@ -89,7 +91,8 @@ export const fetchAgentProperties = createAsyncThunk(
   "properties/fetchAgentProps",
   async (_, { rejectWithValue }) => {
     try {
-      const res = await fetchJson("/api/properties/agent/my");
+      const apiUrl = import.meta.env.VITE_API_URL || '/api';
+      const res = await fetchJson(`${apiUrl}/properties/agent/my`);
       return res;
     } catch (err) {
       if (import.meta.env.DEV) {
@@ -111,7 +114,8 @@ export const fetchAdminProperties = createAsyncThunk(
   "properties/fetchAdminProps",
   async (_, { rejectWithValue }) => {
     try {
-      const res = await fetchJson("/api/properties/admin/all");
+      const apiUrl = import.meta.env.VITE_API_URL || '/api';
+      const res = await fetchJson(`${apiUrl}/properties/admin/all`);
       return res;
     } catch (err) {
       if (import.meta.env.DEV) {

@@ -6,12 +6,12 @@ A full-stack Real Estate Management System built with the MERN stack (MongoDB, E
 
 ## 🚀 Live Deployment
 
-| Service  | Platform      | URL                             |
-| -------- | ------------- | ------------------------------- |
-| Frontend | Vercel        | `https://your-app.vercel.app`   |
-| Backend  | Render        | `https://your-api.onrender.com` |
-| Database | MongoDB Atlas | Cloud hosted                    |
-| Images   | Cloudinary    | Cloud CDN                       |
+| Service  | Platform      | URL                                                     |
+| -------- | ------------- | ------------------------------------------------------- |
+| Frontend | Vercel        | `https://your-app.vercel.app`                           |
+| Backend  | Render        | `https://real-estate-management-system-rh4j.onrender.com` |
+| Database | MongoDB Atlas | Cloud hosted                                            |
+| Images   | Cloudinary    | Cloud CDN                                               |
 
 ---
 
@@ -175,6 +175,20 @@ CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
 NODE_ENV=development
 CLIENT_URL=http://localhost:5173
+```
+
+### 2b. Frontend `.env.local`
+
+For local development, create `frontend/.env.local` to point to your backend:
+
+```env
+VITE_API_URL=http://localhost:5000/api
+```
+
+For production (deployed backend), use:
+
+```env
+VITE_API_URL=https://real-estate-management-system-rh4j.onrender.com/api
 ```
 
 ### 3. Run Development

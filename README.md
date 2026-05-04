@@ -6,12 +6,12 @@ A full-stack Real Estate Management System built with the MERN stack (MongoDB, E
 
 ## 🚀 Live Deployment
 
-| Service  | Platform      | URL                                                     |
-| -------- | ------------- | ------------------------------------------------------- |
-| Frontend | Vercel        | `https://your-app.vercel.app`                           |
-| Backend  | Render        | `https://real-estate-management-system-rh4j.onrender.com` |
-| Database | MongoDB Atlas | Cloud hosted                                            |
-| Images   | Cloudinary    | Cloud CDN                                               |
+| Service  | Platform      | URL                                                                             |
+| -------- | ------------- | ------------------------------------------------------------------------------- |
+| Frontend | Vercel        | `https://real-estate-management-system-n-vamshidhar-reddys-projects.vercel.app` |
+| Backend  | Render        | `https://real-estate-management-system-rh4j.onrender.com`                       |
+| Database | MongoDB Atlas | Cloud hosted                                                                    |
+| Images   | Cloudinary    | Cloud CDN                                                                       |
 
 ---
 
@@ -212,6 +212,11 @@ npm run dev:frontend
 - Frontend: http://localhost:5173
 - Backend API: http://localhost:5000/api
 - Health check: http://localhost:5000/api/health
+- Frontend (local): http://localhost:5173
+- Frontend (deployed - Vercel): https://real-estate-management-system-kappa.vercel.app/
+- Backend API (local): http://localhost:5000/api
+- Backend API (deployed - Render): https://real-estate-management-system-rh4j.onrender.com/api
+- Health check (deployed): https://real-estate-management-system-rh4j.onrender.com/api/health
 
 ---
 

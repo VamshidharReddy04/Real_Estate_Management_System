@@ -56,7 +56,7 @@ export default function Navbar({ theme = "light", onToggleTheme }) {
             to="/"
             className="flex items-center gap-2 font-bold text-xl text-primary-700 dark:text-primary-300"
           >
-            <span className="text-2xl">🏠</span>
+            <span className="text-2xl"> </span>
             <span>EstateHub</span>
           </Link>
 

@@ -92,7 +92,7 @@ export default function Register() {
         <div className="auth-card">
           <div className="auth-card-accent" />
           <div className="text-center mb-7">
-            <span className="text-4xl">🏡</span>
+            <span className="text-4xl"></span>
             <h1 className="text-2xl font-bold text-slate-900 dark:text-white mt-2">
               Create Account
             </h1>
@@ -239,7 +239,7 @@ export default function Register() {
                   Creating...
                 </span>
               ) : (
-                "🚀 Create Account"
+                " Create Account"
               )}
             </button>
           </form>

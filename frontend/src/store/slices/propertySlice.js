@@ -34,19 +34,10 @@ export const fetchProperties = createAsyncThunk(
   async (params = {}, { rejectWithValue }) => {
     try {
       const queryString = buildQueryString(params);
-      const apiUrl = import.meta.env.VITE_API_URL || '/api';
+      const apiUrl = import.meta.env.VITE_API_URL || "/api";
       const url = `${apiUrl}/properties${queryString ? `?${queryString}` : ""}`;
 
-      try {
-        return await fetchJson(url);
-      } catch (fetchError) {
-        if (!import.meta.env.DEV) {
-          throw fetchError;
-        }
-
-        const directUrl = `http://localhost:5000/api/properties${queryString ? `?${queryString}` : ""}`;
-        return await fetchJson(directUrl);
-      }
+      return await fetchJson(url);
     } catch (err) {
       if (err instanceof Error && err.message) {
         return rejectWithValue(err.message);
@@ -54,7 +45,7 @@ export const fetchProperties = createAsyncThunk(
 
       if (!err.response) {
         return rejectWithValue(
-          "Cannot reach backend API. Start the backend and verify MongoDB Atlas IP allowlist.",
+          "Cannot reach backend API. Verify your API URL and network connection.",
         );
       }
       return rejectWithValue(
@@ -68,20 +59,12 @@ export const fetchProperty = createAsyncThunk(
   "properties/fetchOne",
   async (id, { rejectWithValue }) => {
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || '/api';
+      const apiUrl = import.meta.env.VITE_API_URL || "/api";
       const res = await fetchJson(`${apiUrl}/properties/${id}`);
       return res;
     } catch (err) {
-      if (import.meta.env.DEV) {
-        try {
-          return await fetchJson(`http://localhost:5000/api/properties/${id}`);
-        } catch (directErr) {
-          return rejectWithValue(directErr.message || "Property not found");
-        }
-      }
-
       return rejectWithValue(
-        err.response?.data?.message || "Property not found",
+        err instanceof Error ? err.message : "Property not found",
       );
     }
   },
@@ -91,21 +74,13 @@ export const fetchAgentProperties = createAsyncThunk(
   "properties/fetchAgentProps",
   async (_, { rejectWithValue }) => {
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || '/api';
+      const apiUrl = import.meta.env.VITE_API_URL || "/api";
       const res = await fetchJson(`${apiUrl}/properties/agent/my`);
       return res;
     } catch (err) {
-      if (import.meta.env.DEV) {
-        try {
-          return await fetchJson(
-            "http://localhost:5000/api/properties/agent/my",
-          );
-        } catch (directErr) {
-          return rejectWithValue(directErr.message || "Failed to fetch");
-        }
-      }
-
-      return rejectWithValue(err.response?.data?.message || "Failed to fetch");
+      return rejectWithValue(
+        err instanceof Error ? err.message : "Failed to fetch",
+      );
     }
   },
 );
@@ -114,21 +89,13 @@ export const fetchAdminProperties = createAsyncThunk(
   "properties/fetchAdminProps",
   async (_, { rejectWithValue }) => {
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || '/api';
+      const apiUrl = import.meta.env.VITE_API_URL || "/api";
       const res = await fetchJson(`${apiUrl}/properties/admin/all`);
       return res;
     } catch (err) {
-      if (import.meta.env.DEV) {
-        try {
-          return await fetchJson(
-            "http://localhost:5000/api/properties/admin/all",
-          );
-        } catch (directErr) {
-          return rejectWithValue(directErr.message || "Failed to fetch");
-        }
-      }
-
-      return rejectWithValue(err.response?.data?.message || "Failed to fetch");
+      return rejectWithValue(
+        err instanceof Error ? err.message : "Failed to fetch",
+      );
     }
   },
 );

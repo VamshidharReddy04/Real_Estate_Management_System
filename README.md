@@ -152,19 +152,20 @@ npm run dev
 
 ## 🔐 Environment Variables
 
-### Setup
+### ONE-FILE SETUP
 
-**Backend** - Create `backend/.env`:
+**Backend** - Copy example to actual `.env`:
 ```bash
-cp backend/.env.example backend/.env
+cd backend
+cp .env.example .env
 ```
 
-Fill in your actual values:
+**Edit `backend/.env`** with your credentials:
 ```env
 MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/realEstateDB?retryWrites=true&w=majority
 PORT=5000
 NODE_ENV=production
-JWT_SECRET=your_super_secret_jwt_key_minimum_32_characters
+JWT_SECRET=generate_a_random_string_minimum_32_characters
 JWT_EXPIRE=7d
 CLIENT_URL=https://your-vercel-frontend-url.vercel.app
 CLOUDINARY_CLOUD_NAME=your_cloud_name
@@ -172,20 +173,23 @@ CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
 ```
 
-**Frontend** - Create `frontend/.env.local`:
+**Frontend** - Copy example to `.env.local`:
 ```bash
-cp frontend/.env.example frontend/.env.local
+cd frontend
+cp .env.example .env.local
 ```
 
-Content (local dev uses proxy):
-```env
-VITE_API_URL=/api
-```
+That's it! **No need to edit** - uses `/api` proxy for local development.
 
-**Vercel Production** - Set in Vercel Dashboard:
-- Go to Project Settings → Environment Variables
+**Production (Vercel)** - Set only in Vercel Dashboard:
+- Project Settings → Environment Variables
 - Add: `VITE_API_URL=https://your-render-backend.onrender.com/api`
-- Redeploy
+- Redeploy automatically uses this
+
+**Why?**
+- Local dev: `.env.local` uses Vite proxy to localhost:5000
+- Production: Vercel uses dashboard environment variable
+- No need for multiple .env files!
 
 **Getting Credentials:**
 - MongoDB: [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)

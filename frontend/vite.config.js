@@ -7,7 +7,7 @@ export default defineConfig({
     port: 5173,
     proxy: {
       "/api": {
-        target: "https://real-estate-management-system-rh4j.onrender.com",
+        target: "http://localhost:5000",
         changeOrigin: true,
       },
     },

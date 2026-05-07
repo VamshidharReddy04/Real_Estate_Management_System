@@ -1,323 +1,339 @@
-# 🏠 EstateHub – MERN Real Estate Management System
+# 🏠 EstateHub - Real Estate Management System
 
-A full-stack Real Estate Management System built with the MERN stack (MongoDB, Express, React, Node.js), featuring role-based auth, property listings, wishlist, inquiry system, and complete admin controls.
-
----
-
-## 🚀 Live Deployment
-
-| Service  | Platform      | URL                                                                             |
-| -------- | ------------- | ------------------------------------------------------------------------------- |
-| Frontend | Vercel        | `https://real-estate-management-system-n-vamshidhar-reddys-projects.vercel.app` |
-| Backend  | Render        | `https://real-estate-management-system-rh4j.onrender.com`                       |
-| Database | MongoDB Atlas | Cloud hosted                                                                    |
-| Images   | Cloudinary    | Cloud CDN                                                                       |
-
----
+A modern, full-stack real estate platform for buying, selling, and renting properties across India. Built with React, Node.js/Express, and MongoDB with cloud deployment on Vercel and Render.
 
 ## ✨ Features
 
-### 👤 Authentication & Roles
-
-- JWT-based Register / Login
-- 3 Roles: **User**, **Agent**, **Admin**
-- Protected routes per role
-- Password hashing with bcryptjs
-
-### 🏠 Properties
-
-- Browse all approved listings with real-time search
-- Filters: type, status, city, price range, bedrooms
-- Pagination (12 per page)
-- Full property details: gallery, features, amenities
-- View counter per property
-
-### ❤️ Wishlist (Users)
-
-- Save/unsave properties
-- Dedicated wishlist dashboard with quick access
-
-### 💬 Inquiries
-
-- Users send messages to property agents
-- Agents can reply to inquiries
-- Status tracking: pending → read → replied
-
-### 🏢 Agent Dashboard
-
-- Add, edit, delete own properties
-- Manage received inquiries
-- View live stats (total listings, views, pending)
-
-### ⚙️ Admin Dashboard
-
-- Approve / reject / suspend properties
-- Manage all users (role change, ban, delete)
-- View all platform inquiries
-- Platform-wide statistics
-
----
+- **Property Listings**: Browse verified properties with detailed information, images, and pricing
+- **Advanced Search & Filters**: Search by location, type (apartment, house, villa, commercial), price range, and other criteria
+- **User Authentication**: Secure registration and login with JWT authentication
+- **Agent Dashboard**: Agents can add, edit, and manage their properties
+- **Admin Panel**: Administrators can approve/reject property listings
+- **Wishlist**: Users can save favorite properties
+- **Inquiries**: Interested buyers can submit inquiries
+- **Image Management**: Cloudinary integration for reliable image hosting
+- **Responsive Design**: Fully responsive UI with Tailwind CSS
+- **Role-Based Access**: Different dashboards for Users, Agents, and Admins
 
 ## 🛠️ Tech Stack
 
-| Layer      | Technology                                  |
-| ---------- | ------------------------------------------- |
-| Frontend   | React 18, Vite, Redux Toolkit, Tailwind CSS |
-| Backend    | Node.js, Express.js                         |
-| Database   | MongoDB + Mongoose                          |
-| Auth       | JWT + bcryptjs                              |
-| Images     | Cloudinary + Multer                         |
-| State Mgmt | Redux Toolkit + Axios                       |
-| UI/UX      | Tailwind CSS, React Hot Toast               |
+### Frontend
 
----
+- **React 18** - UI framework
+- **Redux Toolkit** - State management
+- **React Router DOM** - Client-side routing
+- **Axios** - HTTP client
+- **Tailwind CSS** - Styling
+- **Vite** - Build tool
+- **React Hot Toast** - Notifications
+- **Swiper** - Carousel component
 
-## 📁 Project Structure
+### Backend
+
+- **Node.js** - JavaScript runtime
+- **Express.js** - Web framework
+- **MongoDB** - NoSQL database
+- **JWT** - Authentication
+- **Cloudinary** - Image hosting
+- **CORS** - Cross-origin requests
+
+### Deployment
+
+- **Vercel** - Frontend hosting
+- **Render** - Backend hosting
+- **MongoDB Atlas** - Database hosting
+
+## 📁 Directory Structure
 
 ```
-real-estate-management-system/
-├── backend/
-│   ├── config/
-│   │   ├── cloudinary.js
-│   │   └── db.js
-│   ├── controllers/
-│   │   ├── adminController.js
+Real Estate Management System/
+├── frontend/                      # React + Vite frontend
+│   ├── src/
+│   │   ├── components/           # Reusable components
+│   │   │   ├── Navbar.jsx
+│   │   │   ├── Footer.jsx
+│   │   │   ├── PropertyCard.jsx
+│   │   │   └── SearchFilter.jsx
+│   │   ├── pages/                # Page components
+│   │   │   ├── Home.jsx
+│   │   │   ├── Login.jsx
+│   │   │   ├── Register.jsx
+│   │   │   ├── PropertyDetails.jsx
+│   │   │   ├── AddProperty.jsx
+│   │   │   ├── EditProperty.jsx
+│   │   │   ├── AdminDashboard.jsx
+│   │   │   ├── AgentDashboard.jsx
+│   │   │   └── UserDashboard.jsx
+│   │   ├── store/                # Redux store
+│   │   │   └── slices/
+│   │   │       ├── authSlice.js
+│   │   │       ├── propertySlice.js
+│   │   │       └── wishlistSlice.js
+│   │   ├── utils/
+│   │   │   ├── axios.js
+│   │   │   ├── helpers.js
+│   │   │   └── imageFallbacks.js
+│   │   ├── App.jsx
+│   │   └── index.css
+│   ├── package.json
+│   ├── vite.config.js
+│   ├── tailwind.config.js
+│   ├── vercel.json
+│   └── .env.example
+│
+├── backend/                       # Express.js backend
+│   ├── config/                   # Configuration
+│   │   ├── db.js
+│   │   └── cloudinary.js
+│   ├── models/                   # MongoDB schemas
+│   │   ├── User.js
+│   │   ├── Property.js
+│   │   ├── Inquiry.js
+│   │   └── Wishlist.js
+│   ├── controllers/              # Request handlers
 │   │   ├── authController.js
-│   │   ├── inquiryController.js
 │   │   ├── propertyController.js
-│   │   └── wishlistController.js
-│   ├── data/
-│   │   └── fallbackProperties.js
+│   │   ├── inquiryController.js
+│   │   ├── wishlistController.js
+│   │   └── adminController.js
+│   ├── routes/                   # API routes
+│   │   ├── auth.js
+│   │   ├── properties.js
+│   │   ├── inquiries.js
+│   │   ├── wishlist.js
+│   │   └── admin.js
 │   ├── middleware/
 │   │   └── auth.js
-│   ├── models/
-│   │   ├── Inquiry.js
-│   │   ├── Property.js
-│   │   ├── User.js
-│   │   └── Wishlist.js
-│   ├── routes/
-│   │   ├── admin.js
-│   │   ├── auth.js
-│   │   ├── inquiries.js
-│   │   ├── properties.js
-│   │   └── wishlist.js
-│   ├── scripts/
-│   │   ├── migrateLocalImagesToCloudinary.js
-│   │   └── seedSampleProperties.js
 │   ├── server.js
-│   └── package.json
+│   ├── package.json
+│   └── .env.example
 │
-└── frontend/
-    ├── public/
-    │   └── hero-building.jpg
-    ├── src/
-    │   ├── components/
-    │   │   ├── Footer.jsx
-    │   │   ├── Navbar.jsx
-    │   │   ├── PropertyCard.jsx
-    │   │   └── SearchFilter.jsx
-    │   ├── pages/
-    │   │   ├── AddProperty.jsx
-    │   │   ├── AdminDashboard.jsx
-    │   │   ├── AgentDashboard.jsx
-    │   │   ├── EditProperty.jsx
-    │   │   ├── Home.jsx
-    │   │   ├── Login.jsx
-    │   │   ├── PropertyDetails.jsx
-    │   │   ├── Register.jsx
-    │   │   └── UserDashboard.jsx
-    │   ├── store/
-    │   │   ├── slices/
-    │   │   │   ├── authSlice.js
-    │   │   │   ├── propertySlice.js
-    │   │   │   └── wishlistSlice.js
-    │   │   └── store.js
-    │   ├── utils/
-    │   │   ├── axios.js
-    │   │   ├── helpers.js
-    │   │   └── imageFallbacks.js
-    │   ├── App.jsx
-    │   ├── index.css
-    │   └── main.jsx
-    ├── index.html
-    ├── package.json
-    ├── postcss.config.js
-    ├── tailwind.config.js
-    └── vite.config.js
+├── package.json
+└── README.md
 ```
 
----
+## 📋 Prerequisites
 
-## ⚙️ Local Setup
+- **Node.js** v16+
+- **npm** or **yarn**
+- **MongoDB Atlas** account (free tier available at [mongodb.com](https://mongodb.com))
+- **Cloudinary** account (free tier available at [cloudinary.com](https://cloudinary.com))
+- **Git**
 
-### Prerequisites
+## 🚀 Quick Start
 
-- Node.js v18+
-- MongoDB Atlas account
-- Cloudinary account
-
-### 1. Install Dependencies
+### 1. Clone Repository
 
 ```bash
-npm install
-npm run install:all
+git clone https://github.com/VamshidharReddy04/Real_Estate_Management_System.git
+cd Real\ Estate\ Management\ System
 ```
 
-### 2. Backend `.env`
+### 2. Backend Setup
+
+```bash
+cd backend
+npm install
+cp .env.example .env
+# Edit .env with your credentials (see Environment Variables below)
+npm start
+# Backend runs on http://localhost:5000
+```
+
+### 3. Frontend Setup
+
+```bash
+cd ../frontend
+npm install
+cp .env.example .env.local
+npm run dev
+# Frontend runs on http://localhost:5173 (or next available port)
+```
+
+## 🔐 Environment Variables
+
+### Backend (.env)
+
+Copy `.env.example` and fill in your credentials:
 
 ```env
+# MongoDB Connection
+MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/realEstateDB?retryWrites=true&w=majority
+
+# Server
 PORT=5000
-MONGO_URI=mongodb+srv://<user>:<pass>@cluster.mongodb.net/realEstateDB
-JWT_SECRET=your_super_secret_key_at_least_32_chars
+NODE_ENV=production
+
+# JWT Authentication
+JWT_SECRET=your_long_random_secret_key_minimum_32_characters
 JWT_EXPIRE=7d
+
+# CORS
+CLIENT_URL=https://your-vercel-url.vercel.app
+
+# Cloudinary
 CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
-NODE_ENV=development
-CLIENT_URL=http://localhost:5173
 ```
 
-### 2b. Frontend `.env.local`
+**How to get credentials:**
 
-For local development, create `frontend/.env.local` to point to your backend:
+1. **MongoDB**: Create cluster at [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
+2. **Cloudinary**: Sign up at [Cloudinary](https://cloudinary.com/)
+3. **JWT_SECRET**: Generate random string (e.g., `openssl rand -base64 32`)
+
+### Frontend (.env.local)
 
 ```env
-VITE_API_URL=http://localhost:5000/api
+VITE_API_URL=/api
 ```
 
-For production (deployed backend), use:
+(For development - uses Vite proxy)
+
+### Frontend (.env.production)
 
 ```env
-VITE_API_URL=https://real-estate-management-system-rh4j.onrender.com/api
+VITE_API_URL=https://your-render-backend.onrender.com/api
 ```
 
-### 3. Run Development
+(Used when deployed to Vercel)
 
-Single command from the project root:
+## 🏃 Running the Application
+
+### Development
+
+**Start Backend** (Terminal 1):
 
 ```bash
+cd backend
+npm start
+```
+
+**Start Frontend** (Terminal 2):
+
+```bash
+cd frontend
 npm run dev
 ```
 
-This starts backend and frontend together.
+Frontend: http://localhost:5173
+Backend: http://localhost:5000
+
+### Production Build
 
 ```bash
-# Backend only
-npm run dev:backend
-
-# Frontend only
-npm run dev:frontend
+cd frontend
+npm run build    # Creates optimized build in dist/
 ```
 
-- Frontend: http://localhost:5173
-- Backend API: http://localhost:5000/api
-- Health check: http://localhost:5000/api/health
-- Frontend (local): http://localhost:5173
-- Frontend (deployed - Vercel): https://real-estate-management-system-kappa.vercel.app/
-- Backend API (local): http://localhost:5000/api
-- Backend API (deployed - Render): https://real-estate-management-system-rh4j.onrender.com/api
-- Health check (deployed): https://real-estate-management-system-rh4j.onrender.com/api/health
+## 🌐 Live Deployment
 
----
+| Component | Platform | URL                                                                           |
+| --------- | -------- | ----------------------------------------------------------------------------- |
+| Frontend  | Vercel   | https://real-estate-management-system-n-vamshidhar-reddys-projects.vercel.app |
+| Backend   | Render   | https://real-estate-management-system-rh4j.onrender.com                       |
 
-## ☁️ Deployment Guide
-
-### Backend → Render
-
-1. Push `backend/` to a GitHub repo
-2. Create a new **Web Service** on [render.com](https://render.com)
-3. Connect repo, set **Build**: `npm install`, **Start**: `npm start`
-4. Add the backend environment variables from the `.env` example above
-5. Deploy → copy your Render URL
-
-### Frontend → Vercel
-
-1. Push `frontend/` to a GitHub repo
-2. Import project on [vercel.com](https://vercel.com)
-3. Framework preset: **Vite**
-4. Add env var: `VITE_API_URL=https://your-render-url.onrender.com/api`
-5. Deploy → get your live URL
-
-### Database → MongoDB Atlas
-
-1. Create cluster at [mongodb.com/atlas](https://cloud.mongodb.com)
-2. Create database user
-3. Whitelist IP: `0.0.0.0/0` (allow all for production)
-4. Copy connection string → paste into `MONGO_URI`
-
-### Images → Cloudinary
-
-1. Sign up at [cloudinary.com](https://cloudinary.com)
-2. Dashboard → copy Cloud Name, API Key, API Secret
-3. Paste into backend environment variables
-
----
-
-## 🔌 API Reference
+## 📡 API Endpoints
 
 ### Auth
 
-| Method | Endpoint             | Access  | Description       |
-| ------ | -------------------- | ------- | ----------------- |
-| POST   | `/api/auth/register` | Public  | Register new user |
-| POST   | `/api/auth/login`    | Public  | Login & get token |
-| GET    | `/api/auth/me`       | Private | Get current user  |
-| PUT    | `/api/auth/profile`  | Private | Update profile    |
+- `POST /api/auth/register` - Register user
+- `POST /api/auth/login` - Login user
 
 ### Properties
 
-| Method | Endpoint                      | Access      | Description             |
-| ------ | ----------------------------- | ----------- | ----------------------- |
-| GET    | `/api/properties`             | Public      | List all (with filters) |
-| GET    | `/api/properties/:id`         | Public      | Property details        |
-| POST   | `/api/properties`             | Agent/Admin | Create property         |
-| PUT    | `/api/properties/:id`         | Agent/Admin | Update property         |
-| DELETE | `/api/properties/:id`         | Agent/Admin | Delete property         |
-| GET    | `/api/properties/agent/my`    | Agent       | Agent's own listings    |
-| GET    | `/api/properties/admin/all`   | Admin       | All properties          |
-| PUT    | `/api/properties/:id/approve` | Admin       | Approve/reject          |
+- `GET /api/properties` - List all properties
+- `GET /api/properties/:id` - Get property details
+- `POST /api/properties` - Create property (agents)
+- `PUT /api/properties/:id` - Update property (agents)
+- `DELETE /api/properties/:id` - Delete property (agents)
+- `PUT /api/properties/:id/approve` - Approve property (admin)
 
 ### Wishlist
 
-| Method | Endpoint                    | Access | Description     |
-| ------ | --------------------------- | ------ | --------------- |
-| GET    | `/api/wishlist`             | User   | Get wishlist    |
-| POST   | `/api/wishlist/:propertyId` | User   | Add to wishlist |
-| DELETE | `/api/wishlist/:propertyId` | User   | Remove          |
+- `GET /api/wishlist` - Get wishlist
+- `POST /api/wishlist/:propertyId` - Add to wishlist
+- `DELETE /api/wishlist/:propertyId` - Remove from wishlist
 
 ### Inquiries
 
-| Method | Endpoint               | Access      | Description        |
-| ------ | ---------------------- | ----------- | ------------------ |
-| POST   | `/api/inquiries`       | User        | Send inquiry       |
-| GET    | `/api/inquiries/my`    | User        | My sent inquiries  |
-| GET    | `/api/inquiries/agent` | Agent       | Received inquiries |
-| PUT    | `/api/inquiries/:id`   | Agent/Admin | Reply / update     |
-| GET    | `/api/inquiries/admin` | Admin       | All inquiries      |
+- `POST /api/inquiries` - Send inquiry
+- `GET /api/inquiries/my` - Get my inquiries
 
-### Admin
+## 🔄 Deployment Steps
 
-| Method | Endpoint               | Access | Description    |
-| ------ | ---------------------- | ------ | -------------- |
-| GET    | `/api/admin/stats`     | Admin  | Platform stats |
-| GET    | `/api/admin/users`     | Admin  | All users      |
-| PUT    | `/api/admin/users/:id` | Admin  | Update user    |
-| DELETE | `/api/admin/users/:id` | Admin  | Delete user    |
+### Deploy Backend to Render
+
+1. Push code to GitHub
+2. Go to [render.com](https://render.com) and create new Web Service
+3. Connect GitHub repository
+4. Build Command: `npm install`
+5. Start Command: `npm start`
+6. Add environment variables from `.env.example`
+7. Deploy and copy URL
+
+### Deploy Frontend to Vercel
+
+1. Go to [vercel.com](https://vercel.com) and import GitHub repo
+2. Set environment variable: `VITE_API_URL=https://your-render-url/api`
+3. Deploy
+4. Update `CLIENT_URL` in backend and redeploy
+
+## ⚙️ Troubleshooting
+
+**Properties not loading?**
+
+- Check backend is running
+- Verify `VITE_API_URL` in frontend
+- Check MongoDB connection
+- View browser console (F12) for errors
+
+**CORS errors?**
+
+- Update `CLIENT_URL` in backend .env
+- Match frontend URL exactly
+- Redeploy backend
+
+**Images not uploading?**
+
+- Verify Cloudinary credentials
+- Check account has active plan
+- Confirm credentials in backend .env
+
+**MongoDB connection fails?**
+
+- Add your IP to MongoDB Atlas whitelist
+- Use `0.0.0.0/0` for development only
+- Verify connection string in MONGO_URI
+
+## 🤝 Contributing
+
+1. Fork repository
+2. Create feature branch: `git checkout -b feature/YourFeature`
+3. Commit: `git commit -m 'Add YourFeature'`
+4. Push: `git push origin feature/YourFeature`
+5. Open Pull Request
+
+## ⚠️ Security Notes
+
+- Never commit `.env` files (already in .gitignore)
+- Use strong `JWT_SECRET` (minimum 32 characters)
+- Rotate credentials if exposed
+- Keep dependencies updated
+- Use HTTPS in production
+- Whitelist MongoDB IPs carefully
+
+## 📄 License
+
+MIT License - See LICENSE file for details
+
+## 👨‍💻 Author
+
+**Vamshidhar Reddy**
+
+- GitHub: [@VamshidharReddy04](https://github.com/VamshidharReddy04)
 
 ---
 
-## 🔐 Default Demo Accounts
-
-Use these credentials with the demo buttons on the login page:
-
-- **User** → `demo@user.com` / `demo123`
-- **Agent** → `demo@agent.com` / `demo123`
-- **Admin** → `demo@admin.com` / `demo123`
-
-> These accounts are created automatically when you run `npm run seed:properties` in `backend/`.
-
----
-
-## 📜 License
-
-MIT © EstateHub 2024
+**Ready to deploy? Follow the Quick Start guide above!** 🚀

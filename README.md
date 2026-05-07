@@ -152,52 +152,48 @@ npm run dev
 
 ## 🔐 Environment Variables
 
-### Backend (.env)
+### Backend Setup
 
-Copy `.env.example` and fill in your credentials:
+1. Copy `.env.example` to `.env`:
+```bash
+cd backend
+cp .env.example .env
+```
 
+2. Edit `backend/.env` and fill in your credentials:
 ```env
-# MongoDB Connection
 MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/realEstateDB?retryWrites=true&w=majority
-
-# Server
 PORT=5000
 NODE_ENV=production
-
-# JWT Authentication
-JWT_SECRET=your_long_random_secret_key_minimum_32_characters
+JWT_SECRET=your_super_secret_jwt_key_here_minimum_32_characters
 JWT_EXPIRE=7d
-
-# CORS
-CLIENT_URL=https://your-vercel-url.vercel.app
-
-# Cloudinary
+CLIENT_URL=https://your-vercel-frontend-url.vercel.app
 CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
 ```
 
-**How to get credentials:**
+**Getting Credentials:**
+- **MongoDB**: Create cluster at [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
+- **Cloudinary**: Sign up at [Cloudinary](https://cloudinary.com/)
+- **JWT_SECRET**: Generate with `openssl rand -base64 32`
 
-1. **MongoDB**: Create cluster at [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
-2. **Cloudinary**: Sign up at [Cloudinary](https://cloudinary.com/)
-3. **JWT_SECRET**: Generate random string (e.g., `openssl rand -base64 32`)
+### Frontend Setup
 
-### Frontend (.env.local)
-
-```env
-VITE_API_URL=/api
+**Local Development:**
+```bash
+cd frontend
+cp .env.example .env.local
+# Content: VITE_API_URL=/api
 ```
 
-(For development - uses Vite proxy)
+**Production (Vercel):**
+1. Go to Vercel Project Settings → Environment Variables
+2. Add: `VITE_API_URL=https://your-render-backend.onrender.com/api`
+3. Redeploy
 
-### Frontend (.env.production)
+**Note:** The `.env.local` file uses Vite's proxy to `/api` which is configured in `vite.config.js` to redirect to the backend server. The production environment variable points directly to the deployed Render backend.
 
-```env
-VITE_API_URL=https://your-render-backend.onrender.com/api
-```
-
-(Used when deployed to Vercel)
 
 ## 🏃 Running the Application
 

@@ -152,20 +152,19 @@ npm run dev
 
 ## 🔐 Environment Variables
 
-### Backend Setup
+### Setup
 
-1. Copy `.env.example` to `.env`:
+**Backend** - Create `backend/.env`:
 ```bash
-cd backend
-cp .env.example .env
+cp backend/.env.example backend/.env
 ```
 
-2. Edit `backend/.env` and fill in your credentials:
+Fill in your actual values:
 ```env
 MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/realEstateDB?retryWrites=true&w=majority
 PORT=5000
 NODE_ENV=production
-JWT_SECRET=your_super_secret_jwt_key_here_minimum_32_characters
+JWT_SECRET=your_super_secret_jwt_key_minimum_32_characters
 JWT_EXPIRE=7d
 CLIENT_URL=https://your-vercel-frontend-url.vercel.app
 CLOUDINARY_CLOUD_NAME=your_cloud_name
@@ -173,27 +172,25 @@ CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
 ```
 
-**Getting Credentials:**
-- **MongoDB**: Create cluster at [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
-- **Cloudinary**: Sign up at [Cloudinary](https://cloudinary.com/)
-- **JWT_SECRET**: Generate with `openssl rand -base64 32`
-
-### Frontend Setup
-
-**Local Development:**
+**Frontend** - Create `frontend/.env.local`:
 ```bash
-cd frontend
-cp .env.example .env.local
-# Content: VITE_API_URL=/api
+cp frontend/.env.example frontend/.env.local
 ```
 
-**Production (Vercel):**
-1. Go to Vercel Project Settings → Environment Variables
-2. Add: `VITE_API_URL=https://your-render-backend.onrender.com/api`
-3. Redeploy
+Content (local dev uses proxy):
+```env
+VITE_API_URL=/api
+```
 
-**Note:** The `.env.local` file uses Vite's proxy to `/api` which is configured in `vite.config.js` to redirect to the backend server. The production environment variable points directly to the deployed Render backend.
+**Vercel Production** - Set in Vercel Dashboard:
+- Go to Project Settings → Environment Variables
+- Add: `VITE_API_URL=https://your-render-backend.onrender.com/api`
+- Redeploy
 
+**Getting Credentials:**
+- MongoDB: [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
+- Cloudinary: [Cloudinary](https://cloudinary.com/)
+- JWT_SECRET: `openssl rand -base64 32`
 
 ## 🏃 Running the Application
 

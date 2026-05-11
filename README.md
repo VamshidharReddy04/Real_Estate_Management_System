@@ -2,6 +2,15 @@
 
 A modern, full-stack real estate platform for buying, selling, and renting properties across India. Built with React, Node.js/Express, and MongoDB with cloud deployment on Vercel and Render.
 
+## 🎯 What's New (Latest Updates)
+
+✅ **Image Management** - Implemented robust image normalization with Cloudinary integration (12 properties with cloud-hosted images)  
+✅ **Code Cleanup** - Removed unused dependencies (`express-validator`, `swiper`), dead migration scripts, and unused imports  
+✅ **CSS Refactoring** - Centralized all global styles into `App.css` for better maintainability  
+✅ **API Routing** - Fixed Vite proxy configuration (`/api` → `http://localhost:5000`)  
+✅ **Build Optimization** - Streamlined frontend and backend builds for production deployment  
+✅ **GitHub Ready** - Full project committed and pushed, ready for deployment  
+
 ## ✨ Features
 
 - **Property Listings**: Browse verified properties with detailed information, images, and pricing
@@ -26,6 +35,7 @@ A modern, full-stack real estate platform for buying, selling, and renting prope
 - **Tailwind CSS** - Styling
 - **Vite** - Build tool
 - **React Hot Toast** - Notifications
+	- **Global Styles** - Centralized CSS in `App.css` with Tailwind directives and custom components
 
 ### Backend
 
@@ -34,6 +44,8 @@ A modern, full-stack real estate platform for buying, selling, and renting prope
 - **MongoDB** - NoSQL database
 - **JWT** - Authentication
 - **Cloudinary** - Image hosting
+- **Multer** - File upload handling
+- **Multer Cloudinary Storage** - Direct cloud upload integration
 - **CORS** - Cross-origin requests
 
 ### Deployment
@@ -147,9 +159,57 @@ npm install
 cp .env.example .env.local
 npm run dev
 # Frontend runs on http://localhost:5173 (or next available port)
+
+### 4. Seed Sample Data (Optional)
+
+To populate the database with sample properties:
+
+```bash
+cd backend
+node scripts/seedSampleProperties.js
+# Output: Successfully seeded 12 properties
+```
+
+### 5. Demo Account Credentials
+
+After seeding, use these test accounts:
+
+| Role  | Email             | Password    |
+|-------|-------------------|-------------|
+| Admin | admin@demo.com    | Admin@123   |
+| Agent | agent@demo.com    | Agent@123   |
+| User  | user@demo.com     | User@123    |
+
+**Note:** Create these accounts manually in the app or update the seed script to create demo users.
 ```
 
 ## 🔐 Environment Variables
+
+### 🖼️ Cloudinary Setup
+
+The application uses Cloudinary for reliable image hosting. To enable:
+
+1. **Create Cloudinary Account**: Sign up at [cloudinary.com](https://cloudinary.com) (free tier available)
+2. **Get Credentials**: Copy your Cloud Name, API Key, and API Secret from Dashboard
+3. **Add to Backend `.env`**:
+	 ```env
+	 CLOUDINARY_CLOUD_NAME=your_cloud_name
+	 CLOUDINARY_API_KEY=your_api_key
+	 CLOUDINARY_API_SECRET=your_api_secret
+	 ```
+4. **Automatic Image Handling**: When agents upload properties, images are automatically uploaded to Cloudinary
+
+**Image Storage Format**: All images stored as objects in MongoDB:
+```json
+{
+	"url": "https://res.cloudinary.com/...",
+	"public_id": "cloud_public_identifier"
+}
+```
+
+**Backward Compatibility**: The app automatically converts string URLs to Cloudinary format using `normalizeImages()` in the API.
+
+---
 
 ### ONE-FILE SETUP
 
@@ -282,7 +342,84 @@ npm run build    # Creates optimized build in dist/
 3. Deploy
 4. Update `CLIENT_URL` in backend and redeploy
 
+### 📋 Detailed Render (Backend) Steps
+
+1. **Create New Web Service**:
+	- Go to https://render.com/dashboard
+	- Click "New +" → "Web Service"
+	- Connect GitHub account and select repository
+
+2. **Configure Deployment**:
+	- **Name**: `real-estate-management-backend`
+	- **Root Directory**: `backend`
+	- **Build Command**: `npm install`
+	- **Start Command**: `npm start`
+	- **Instance Type**: Free (or Paid for production)
+
+3. **Add Environment Variables** (Settings → Environment):
+	```
+	MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/realEstateDB...
+	PORT=5000
+	NODE_ENV=production
+	JWT_SECRET=your-32-char-secret-key
+	JWT_EXPIRE=7d
+	CLIENT_URL=https://your-frontend-url.vercel.app
+	CLOUDINARY_CLOUD_NAME=your_cloud_name
+	CLOUDINARY_API_KEY=your_api_key
+	CLOUDINARY_API_SECRET=your_api_secret
+	```
+
+4. **Deploy**: Click "Deploy" and wait (~5 min)
+5. **Copy URL**: Backend now accessible at `https://your-service.onrender.com`
+
+### 📋 Detailed Vercel (Frontend) Steps
+
+1. **Import Repository**:
+	- Go to https://vercel.com/new
+	- Click "Import Git Repository"
+	- Select your GitHub repo
+
+2. **Configure Project**:
+	- **Project Name**: `real-estate-management-frontend`
+	- **Framework**: `Vite`
+	- **Root Directory**: `frontend`
+	- **Build Command**: `npm run build` (auto-detected)
+	- **Output Directory**: `dist` (auto-detected)
+
+3. **Add Environment Variables** (Settings → Environment Variables):
+	```
+	VITE_API_URL=https://your-service.onrender.com/api
+	```
+
+4. **Deploy**: Click "Deploy" and wait (~2-3 min)
+5. **Copy URL**: Frontend now accessible at `https://your-project.vercel.app`
+
+### 🔗 Final Steps
+
+1. **Update Backend URL**: In `backend/.env`, update:
+	```
+	CLIENT_URL=https://your-project.vercel.app
+	```
+
+2. **Redeploy Backend**: Push changes or manually trigger redeploy in Render
+3. **Test**: Visit https://your-project.vercel.app and verify all features work
+
+---
+
 ## ⚙️ Troubleshooting
+
+### ✅ Verification Checklist
+
+Before deploying, verify locally:
+
+- [ ] Backend running: `curl http://localhost:5000/api/health` (or check server.js has health route)
+- [ ] Frontend builds: `npm run build` succeeds in frontend/ without errors
+- [ ] MongoDB connected: Seed script runs successfully
+- [ ] Cloudinary working: Properties display images after seeding
+- [ ] Login works: Can create account and login
+- [ ] CORS not blocking: No "Access to XMLHttpRequest" errors in console
+
+### 🐛 Common Issues & Solutions
 
 **Properties not loading?**
 
@@ -290,26 +427,89 @@ npm run build    # Creates optimized build in dist/
 - Verify `VITE_API_URL` in frontend
 - Check MongoDB connection
 - View browser console (F12) for errors
+- **Local dev**: Ensure Vite proxy is configured (check `frontend/vite.config.js`)
+- **Production**: Verify `VITE_API_URL` environment variable is set correctly in Vercel
 
 **CORS errors?**
 
 - Update `CLIENT_URL` in backend .env
 - Match frontend URL exactly
 - Redeploy backend
+- Check backend `server.js` has CORS configured: `cors({ origin: process.env.CLIENT_URL })`
 
 **Images not uploading?**
 
 - Verify Cloudinary credentials
 - Check account has active plan
 - Confirm credentials in backend .env
+- Test Cloudinary separately: `node scripts/seedSampleProperties.js`
+- Check `console.log` in `propertyController.js` for upload errors
+- Verify Cloudinary account quota not exceeded
 
 **MongoDB connection fails?**
 
 - Add your IP to MongoDB Atlas whitelist
 - Use `0.0.0.0/0` for development only
 - Verify connection string in MONGO_URI
+- Test connection: `mongo "YOUR_MONGO_URI"`
+- Check `.env` file is in correct location (`backend/.env`)
+- Ensure `MONGO_URI` doesn't have special characters needing URL encoding
+
+### 🚀 Performance Tips
+
+- **Backend**: Use `NODE_ENV=production` on Render (reduces logging, faster)
+- **Frontend**: Vercel caches static assets; CSS bundle should be <100KB
+- **Database**: Add indexes to frequently queried fields for faster queries
+- **Images**: Cloudinary auto-optimizes; consider using `q_auto,f_auto` in URLs for smaller payloads
 
 ## 🤝 Contributing
+
+## 🏗️ Project Architecture
+
+### Frontend Flow
+
+1. **Entry**: `main.jsx` → mounts `App.jsx` to DOM
+2. **Routing**: `App.jsx` uses React Router with private route protection
+3. **State Management**: Redux Toolkit stores (`authSlice`, `propertySlice`, `wishlistSlice`)
+4. **API Calls**: Axios wrapper in `utils/axios.js` with automatic token injection
+5. **Styling**: Global styles in `App.css` (Tailwind + custom CSS)
+6. **Components**: Reusable in `components/` (Navbar, Footer, PropertyCard, SearchFilter)
+7. **Pages**: Role-based views in `pages/` (Admin, Agent, User dashboards)
+
+### Backend Flow
+
+1. **Entry**: `server.js` loads `.env` and connects to MongoDB/Cloudinary
+2. **Database**: MongoDB models in `models/` (User, Property, Inquiry, Wishlist)
+3. **Controllers**: Business logic in `controllers/` with image normalization
+4. **Routes**: API endpoints in `routes/` with authentication middleware
+5. **Auth**: JWT middleware in `middleware/auth.js` protects routes
+6. **File Upload**: Multer + Cloudinary in image upload endpoints
+7. **Seed Data**: `scripts/seedSampleProperties.js` populates 12 demo properties
+
+### Image Handling Pipeline
+
+```
+User Uploads Image
+	↓
+Multer captures file
+	↓
+Multer Cloudinary Storage uploads to cloud
+	↓
+API returns {url, public_id}
+	↓
+Frontend receives URL and displays
+	↓
+normalizeImages() ensures consistency
+```
+
+### Database Schema
+
+**User**: `{email, password, role, name, phone}`
+**Property**: `{title, description, location, price, images[], agentId, status}`
+**Inquiry**: `{propertyId, userId, message, status}`
+**Wishlist**: `{userId, propertyId}`
+
+---
 
 1. Fork repository
 2. Create feature branch: `git checkout -b feature/YourFeature`
@@ -325,6 +525,99 @@ npm run build    # Creates optimized build in dist/
 - Keep dependencies updated
 - Use HTTPS in production
 - Whitelist MongoDB IPs carefully
+
+## 🧪 Testing Guide
+
+### Manual Testing Checklist
+
+**Authentication**:
+- [ ] Register new user account
+- [ ] Login with credentials
+- [ ] Token stored in localStorage
+- [ ] Logout clears token
+- [ ] Protected routes redirect to login
+
+**Properties**:
+- [ ] Browse all properties on home page
+- [ ] Search/filter by location and type
+- [ ] Click property card to view details
+- [ ] Images load correctly from Cloudinary
+- [ ] Agent can add new property with images
+- [ ] Admin can approve/reject properties
+
+**Wishlist**:
+- [ ] User can add properties to wishlist
+- [ ] Wishlist persists on page refresh
+- [ ] User can view wishlist page
+- [ ] Remove from wishlist works
+
+**Inquiries**:
+- [ ] User can submit inquiry on property
+- [ ] Inquiry shows in user dashboard
+- [ ] Agent receives inquiries for their properties
+
+### Automated Testing (Future)
+
+Consider adding:
+- Jest for unit tests (controllers, utils)
+- React Testing Library for component tests
+- Supertest for API endpoint tests
+- E2E tests with Cypress or Playwright
+
+---
+
+## 📦 Version Information
+
+| Component | Version | Status    |
+|-----------|---------|-----------|
+| Node.js   | 16+     | ✅ Tested |
+| React     | 18.x    | ✅ Latest |
+| Vite      | Latest  | ✅ Latest |
+| Tailwind  | 3.x     | ✅ Latest |
+| Express   | 4.x     | ✅ Stable |
+| MongoDB   | Latest  | ✅ Atlas  |
+
+---
+
+## 📋 Quick Reference
+
+### Commands Cheat Sheet
+
+```bash
+# Backend
+cd backend && npm install                   # Install dependencies
+npm start                                   # Run server (port 5000)
+npm run seed                                # Populate sample data
+
+# Frontend
+cd frontend && npm install                  # Install dependencies
+npm run dev                                 # Dev server (port 5173)
+npm run build                               # Production build
+npm run preview                             # Preview build locally
+
+# Git
+git status                                  # Check changes
+git add -A && git commit -m "message"       # Commit changes
+git push origin main                        # Push to GitHub
+```
+
+### Environment Variables Quick Copy
+
+**Backend `.env`** (minimum):
+```env
+MONGO_URI=mongodb+srv://user:pass@cluster.mongodb.net/realEstateDB
+JWT_SECRET=your-random-32-char-secret-key-here
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+NODE_ENV=development
+```
+
+**Frontend `.env.local`** (local dev only):
+```env
+# No variables needed for local dev (uses Vite proxy)
+# For production, Vercel env var is: VITE_API_URL
+```
 
 ## 📄 License
 

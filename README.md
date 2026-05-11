@@ -4,12 +4,12 @@ A modern, full-stack real estate platform for buying, selling, and renting prope
 
 ## 🎯 What's New (Latest Updates)
 
-✅ **Image Management** - Implemented robust image normalization with Cloudinary integration (12 properties with cloud-hosted images)  
-✅ **Code Cleanup** - Removed unused dependencies (`express-validator`, `swiper`), dead migration scripts, and unused imports  
-✅ **CSS Refactoring** - Centralized all global styles into `App.css` for better maintainability  
-✅ **API Routing** - Fixed Vite proxy configuration (`/api` → `http://localhost:5000`)  
-✅ **Build Optimization** - Streamlined frontend and backend builds for production deployment  
-✅ **GitHub Ready** - Full project committed and pushed, ready for deployment  
+✅ **Image Management** - Implemented robust image normalization with Cloudinary integration (12 properties with cloud-hosted images)
+✅ **Code Cleanup** - Removed unused dependencies (`express-validator`, `swiper`), dead migration scripts, and unused imports
+✅ **CSS Refactoring** - Centralized all global styles into `App.css` for better maintainability
+✅ **API Routing** - Fixed Vite proxy configuration (`/api` → `http://localhost:5000`)
+✅ **Build Optimization** - Streamlined frontend and backend builds for production deployment
+✅ **GitHub Ready** - Full project committed and pushed, ready for deployment
 
 ## ✨ Features
 
@@ -35,7 +35,7 @@ A modern, full-stack real estate platform for buying, selling, and renting prope
 - **Tailwind CSS** - Styling
 - **Vite** - Build tool
 - **React Hot Toast** - Notifications
-	- **Global Styles** - Centralized CSS in `App.css` with Tailwind directives and custom components
+  - **Global Styles** - Centralized CSS in `App.css` with Tailwind directives and custom components
 
 ### Backend
 
@@ -153,7 +153,7 @@ npm start
 
 ### 3. Frontend Setup
 
-```bash
+````bash
 cd ../frontend
 npm install
 cp .env.example .env.local
@@ -168,20 +168,21 @@ To populate the database with sample properties:
 cd backend
 node scripts/seedSampleProperties.js
 # Output: Successfully seeded 12 properties
-```
+````
 
 ### 5. Demo Account Credentials
 
 After seeding, use these test accounts:
 
-| Role  | Email             | Password    |
-|-------|-------------------|-------------|
-| Admin | admin@demo.com    | Admin@123   |
-| Agent | agent@demo.com    | Agent@123   |
-| User  | user@demo.com     | User@123    |
+| Role  | Email          | Password  |
+| ----- | -------------- | --------- |
+| Admin | admin@demo.com | Admin@123 |
+| Agent | agent@demo.com | Agent@123 |
+| User  | user@demo.com  | User@123  |
 
 **Note:** Create these accounts manually in the app or update the seed script to create demo users.
-```
+
+````
 
 ## 🔐 Environment Variables
 
@@ -205,7 +206,7 @@ The application uses Cloudinary for reliable image hosting. To enable:
 	"url": "https://res.cloudinary.com/...",
 	"public_id": "cloud_public_identifier"
 }
-```
+````
 
 **Backward Compatibility**: The app automatically converts string URLs to Cloudinary format using `normalizeImages()` in the API.
 
@@ -345,29 +346,30 @@ npm run build    # Creates optimized build in dist/
 ### 📋 Detailed Render (Backend) Steps
 
 1. **Create New Web Service**:
-	- Go to https://render.com/dashboard
-	- Click "New +" → "Web Service"
-	- Connect GitHub account and select repository
+   - Go to https://render.com/dashboard
+   - Click "New +" → "Web Service"
+   - Connect GitHub account and select repository
 
 2. **Configure Deployment**:
-	- **Name**: `real-estate-management-backend`
-	- **Root Directory**: `backend`
-	- **Build Command**: `npm install`
-	- **Start Command**: `npm start`
-	- **Instance Type**: Free (or Paid for production)
+   - **Name**: `real-estate-management-backend`
+   - **Root Directory**: `backend`
+   - **Build Command**: `npm install`
+   - **Start Command**: `npm start`
+   - **Instance Type**: Free (or Paid for production)
 
 3. **Add Environment Variables** (Settings → Environment):
-	```
-	MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/realEstateDB...
-	PORT=5000
-	NODE_ENV=production
-	JWT_SECRET=your-32-char-secret-key
-	JWT_EXPIRE=7d
-	CLIENT_URL=https://your-frontend-url.vercel.app
-	CLOUDINARY_CLOUD_NAME=your_cloud_name
-	CLOUDINARY_API_KEY=your_api_key
-	CLOUDINARY_API_SECRET=your_api_secret
-	```
+
+   ```
+   MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/realEstateDB...
+   PORT=5000
+   NODE_ENV=production
+   JWT_SECRET=your-32-char-secret-key
+   JWT_EXPIRE=7d
+   CLIENT_URL=https://your-frontend-url.vercel.app
+   CLOUDINARY_CLOUD_NAME=your_cloud_name
+   CLOUDINARY_API_KEY=your_api_key
+   CLOUDINARY_API_SECRET=your_api_secret
+   ```
 
 4. **Deploy**: Click "Deploy" and wait (~5 min)
 5. **Copy URL**: Backend now accessible at `https://your-service.onrender.com`
@@ -375,21 +377,22 @@ npm run build    # Creates optimized build in dist/
 ### 📋 Detailed Vercel (Frontend) Steps
 
 1. **Import Repository**:
-	- Go to https://vercel.com/new
-	- Click "Import Git Repository"
-	- Select your GitHub repo
+   - Go to https://vercel.com/new
+   - Click "Import Git Repository"
+   - Select your GitHub repo
 
 2. **Configure Project**:
-	- **Project Name**: `real-estate-management-frontend`
-	- **Framework**: `Vite`
-	- **Root Directory**: `frontend`
-	- **Build Command**: `npm run build` (auto-detected)
-	- **Output Directory**: `dist` (auto-detected)
+   - **Project Name**: `real-estate-management-frontend`
+   - **Framework**: `Vite`
+   - **Root Directory**: `frontend`
+   - **Build Command**: `npm run build` (auto-detected)
+   - **Output Directory**: `dist` (auto-detected)
 
 3. **Add Environment Variables** (Settings → Environment Variables):
-	```
-	VITE_API_URL=https://your-service.onrender.com/api
-	```
+
+   ```
+   VITE_API_URL=https://your-service.onrender.com/api
+   ```
 
 4. **Deploy**: Click "Deploy" and wait (~2-3 min)
 5. **Copy URL**: Frontend now accessible at `https://your-project.vercel.app`
@@ -397,9 +400,10 @@ npm run build    # Creates optimized build in dist/
 ### 🔗 Final Steps
 
 1. **Update Backend URL**: In `backend/.env`, update:
-	```
-	CLIENT_URL=https://your-project.vercel.app
-	```
+
+   ```
+   CLIENT_URL=https://your-project.vercel.app
+   ```
 
 2. **Redeploy Backend**: Push changes or manually trigger redeploy in Render
 3. **Test**: Visit https://your-project.vercel.app and verify all features work
@@ -531,6 +535,7 @@ normalizeImages() ensures consistency
 ### Manual Testing Checklist
 
 **Authentication**:
+
 - [ ] Register new user account
 - [ ] Login with credentials
 - [ ] Token stored in localStorage
@@ -538,6 +543,7 @@ normalizeImages() ensures consistency
 - [ ] Protected routes redirect to login
 
 **Properties**:
+
 - [ ] Browse all properties on home page
 - [ ] Search/filter by location and type
 - [ ] Click property card to view details
@@ -546,12 +552,14 @@ normalizeImages() ensures consistency
 - [ ] Admin can approve/reject properties
 
 **Wishlist**:
+
 - [ ] User can add properties to wishlist
 - [ ] Wishlist persists on page refresh
 - [ ] User can view wishlist page
 - [ ] Remove from wishlist works
 
 **Inquiries**:
+
 - [ ] User can submit inquiry on property
 - [ ] Inquiry shows in user dashboard
 - [ ] Agent receives inquiries for their properties
@@ -559,6 +567,7 @@ normalizeImages() ensures consistency
 ### Automated Testing (Future)
 
 Consider adding:
+
 - Jest for unit tests (controllers, utils)
 - React Testing Library for component tests
 - Supertest for API endpoint tests
@@ -569,7 +578,7 @@ Consider adding:
 ## 📦 Version Information
 
 | Component | Version | Status    |
-|-----------|---------|-----------|
+| --------- | ------- | --------- |
 | Node.js   | 16+     | ✅ Tested |
 | React     | 18.x    | ✅ Latest |
 | Vite      | Latest  | ✅ Latest |
@@ -604,6 +613,7 @@ git push origin main                        # Push to GitHub
 ### Environment Variables Quick Copy
 
 **Backend `.env`** (minimum):
+
 ```env
 MONGO_URI=mongodb+srv://user:pass@cluster.mongodb.net/realEstateDB
 JWT_SECRET=your-random-32-char-secret-key-here
@@ -614,6 +624,7 @@ NODE_ENV=development
 ```
 
 **Frontend `.env.local`** (local dev only):
+
 ```env
 # No variables needed for local dev (uses Vite proxy)
 # For production, Vercel env var is: VITE_API_URL

@@ -9,6 +9,21 @@ const LIST_SORTS = {
   price: { price: 1 },
 };
 
+const normalizeImages = (images = []) =>
+  (Array.isArray(images) ? images : [])
+    .map((image) => {
+      if (typeof image === "string") {
+        return { url: image };
+      }
+
+      if (image && typeof image === "object" && image.url) {
+        return { url: image.url, public_id: image.public_id };
+      }
+
+      return null;
+    })
+    .filter(Boolean);
+
 const paginateFallbackProperties = ({ page = 1, limit = 12 } = {}) => {
   const safePage = Math.max(1, Number(page) || 1);
   const safeLimit = Math.min(24, Math.max(1, Number(limit) || 12));
@@ -107,10 +122,7 @@ const getProperties = async (req, res) => {
 
     const normalizedProperties = properties.map((property) => ({
       ...property,
-      images:
-        Array.isArray(property.images) && property.images.length > 0
-          ? [property.images[0]]
-          : [],
+      images: normalizeImages(property.images).slice(0, 1),
     }));
 
     res.json({
@@ -137,20 +149,23 @@ const getProperties = async (req, res) => {
 // @access  Public
 const getProperty = async (req, res) => {
   try {
-    const property = await Property.findById(req.params.id).populate(
+    const propertyDoc = await Property.findById(req.params.id).populate(
       "agent",
       "name email phone avatar agentInfo role",
     );
 
-    if (!property) {
+    if (!propertyDoc) {
       return res
         .status(404)
         .json({ success: false, message: "Property not found" });
     }
 
     // Increment views
-    property.views += 1;
-    await property.save();
+    propertyDoc.views += 1;
+    await propertyDoc.save();
+
+    const property = propertyDoc.toObject();
+    property.images = normalizeImages(property.images);
 
     res.json({ success: true, property });
   } catch (error) {
@@ -161,7 +176,11 @@ const getProperty = async (req, res) => {
     if (property) {
       return res.json({
         success: true,
-        property: { ...property, fallback: true },
+        property: {
+          ...property,
+          images: normalizeImages(property.images),
+          fallback: true,
+        },
       });
     }
 

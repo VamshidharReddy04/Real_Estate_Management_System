@@ -26,7 +26,6 @@ A modern, full-stack real estate platform for buying, selling, and renting prope
 - **Tailwind CSS** - Styling
 - **Vite** - Build tool
 - **React Hot Toast** - Notifications
-- **Swiper** - Carousel component
 
 ### Backend
 
@@ -155,12 +154,14 @@ npm run dev
 ### ONE-FILE SETUP
 
 **Backend** - Copy example to actual `.env`:
+
 ```bash
 cd backend
 cp .env.example .env
 ```
 
 **Edit `backend/.env`** with your credentials:
+
 ```env
 MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/realEstateDB?retryWrites=true&w=majority
 PORT=5000
@@ -174,6 +175,7 @@ CLOUDINARY_API_SECRET=your_api_secret
 ```
 
 **Frontend** - Copy example to `.env.local`:
+
 ```bash
 cd frontend
 cp .env.example .env.local
@@ -182,16 +184,19 @@ cp .env.example .env.local
 That's it! **No need to edit** - uses `/api` proxy for local development.
 
 **Production (Vercel)** - Set only in Vercel Dashboard:
+
 - Project Settings → Environment Variables
 - Add: `VITE_API_URL=https://your-render-backend.onrender.com/api`
 - Redeploy automatically uses this
 
 **Why?**
+
 - Local dev: `.env.local` uses Vite proxy to localhost:5000
 - Production: Vercel uses dashboard environment variable
 - No need for multiple .env files!
 
 **Getting Credentials:**
+
 - MongoDB: [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
 - Cloudinary: [Cloudinary](https://cloudinary.com/)
 - JWT_SECRET: `openssl rand -base64 32`

@@ -1,9 +1,15 @@
-require("dotenv").config();
+require("dotenv").config({
+  path: require("path").resolve(__dirname, "../.env"),
+});
 const mongoose = require("mongoose");
 const User = require("../models/User");
 const Property = require("../models/Property");
 
 async function seed() {
+  if (!process.env.MONGO_URI) {
+    throw new Error("MONGO_URI is required to seed sample properties");
+  }
+
   await mongoose.connect(process.env.MONGO_URI);
 
   const demoUsers = [
@@ -46,7 +52,11 @@ async function seed() {
     await user.save();
   }
 
-  const agent = await User.findOne({ email: "demo@agent.com" });
+  const agent = await User.findOne({ email: "demo@agent.com", role: "agent" });
+
+  if (!agent) {
+    throw new Error("Demo agent user was not found after setup");
+  }
 
   const samples = [
     {
@@ -390,17 +400,33 @@ async function seed() {
   ];
 
   for (const sample of samples) {
+    const normalizedImages = (sample.images || [])
+      .map((image) => {
+        if (typeof image === "string") {
+          return { url: image, public_id: undefined };
+        }
+
+        if (image && image.url) {
+          return { url: image.url, public_id: image.public_id };
+        }
+
+        return null;
+      })
+      .filter(Boolean);
+
     await Property.updateOne(
       { title: sample.title },
       {
         $set: {
           ...sample,
+          priceUnit: sample.priceUnit || "total",
+          images: normalizedImages,
           agent: agent._id,
           isApproved: true,
           isAvailable: true,
         },
       },
-      { upsert: true },
+      { upsert: true, setDefaultsOnInsert: true },
     );
   }
 

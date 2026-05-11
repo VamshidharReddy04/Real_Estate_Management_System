@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchWishlist } from "./store/slices/wishlistSlice";
+import "./App.css";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";

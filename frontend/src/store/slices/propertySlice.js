@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import API from "../../utils/axios";
-import axios from "axios";
 
 const buildQueryString = (params = {}) => {
   const searchParams = new URLSearchParams();
@@ -74,13 +73,10 @@ export const fetchAgentProperties = createAsyncThunk(
   "properties/fetchAgentProps",
   async (_, { rejectWithValue }) => {
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || "/api";
-      const res = await fetchJson(`${apiUrl}/properties/agent/my`);
-      return res;
+      const res = await API.get("/properties/agent/my");
+      return res.data;
     } catch (err) {
-      return rejectWithValue(
-        err instanceof Error ? err.message : "Failed to fetch",
-      );
+      return rejectWithValue(err.response?.data?.message || "Failed to fetch");
     }
   },
 );
@@ -89,13 +85,10 @@ export const fetchAdminProperties = createAsyncThunk(
   "properties/fetchAdminProps",
   async (_, { rejectWithValue }) => {
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || "/api";
-      const res = await fetchJson(`${apiUrl}/properties/admin/all`);
-      return res;
+      const res = await API.get("/properties/admin/all");
+      return res.data;
     } catch (err) {
-      return rejectWithValue(
-        err instanceof Error ? err.message : "Failed to fetch",
-      );
+      return rejectWithValue(err.response?.data?.message || "Failed to fetch");
     }
   },
 );

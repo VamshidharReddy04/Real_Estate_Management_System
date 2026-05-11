@@ -25,8 +25,26 @@ app.use("/api/wishlist", require("./routes/wishlist"));
 app.use("/api/inquiries", require("./routes/inquiries"));
 app.use("/api/admin", require("./routes/admin"));
 
+// Root route for deployment checks
+app.get("/", (req, res) => {
+  res.json({
+    success: true,
+    message: "EstateHub API is running",
+    health: "/api/health",
+    apiBase: "/api",
+  });
+});
+
 // Health check
 app.get("/api/health", (req, res) => {
+  res.json({
+    success: true,
+    message: "Real Estate API is running 🏠",
+    timestamp: new Date().toISOString(),
+  });
+});
+
+app.get("/health", (req, res) => {
   res.json({
     success: true,
     message: "Real Estate API is running 🏠",

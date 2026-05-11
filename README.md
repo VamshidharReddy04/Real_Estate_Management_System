@@ -1,4 +1,4 @@
-# 🏠 EstateHub - Real Estate Management System
+# 🏠 EstateHub - Estatehub Management System
 
 A modern, full-stack real estate platform for buying, selling, and renting properties across India. Built with React, Node.js/Express, and MongoDB with cloud deployment on Vercel and Render.
 
@@ -45,7 +45,7 @@ A modern, full-stack real estate platform for buying, selling, and renting prope
 ## 📁 Directory Structure
 
 ```
-Real Estate Management System/
+Estatehub Management System/
 ├── frontend/                      # React + Vite frontend
 │   ├── src/
 │   │   ├── components/           # Reusable components
@@ -125,7 +125,7 @@ Real Estate Management System/
 
 ```bash
 git clone https://github.com/VamshidharReddy04/Real_Estate_Management_System.git
-cd Real\ Estate\ Management\ System
+cd Estatehub\ Management\ System
 ```
 
 ### 2. Backend Setup

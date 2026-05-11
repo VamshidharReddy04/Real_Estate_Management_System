@@ -2,15 +2,6 @@
 
 A modern, full-stack real estate platform for buying, selling, and renting properties across India. Built with React, Node.js/Express, and MongoDB with cloud deployment on Vercel and Render.
 
-## 🎯 What's New (Latest Updates)
-
-✅ **Image Management** - Implemented robust image normalization with Cloudinary integration (12 properties with cloud-hosted images)
-✅ **Code Cleanup** - Removed unused dependencies (`express-validator`, `swiper`), dead migration scripts, and unused imports
-✅ **CSS Refactoring** - Centralized all global styles into `App.css` for better maintainability
-✅ **API Routing** - Fixed Vite proxy configuration (`/api` → `http://localhost:5000`)
-✅ **Build Optimization** - Streamlined frontend and backend builds for production deployment
-✅ **GitHub Ready** - Full project committed and pushed, ready for deployment
-
 ## ✨ Features
 
 - **Property Listings**: Browse verified properties with detailed information, images, and pricing
@@ -186,6 +177,9 @@ After seeding, use these test accounts:
 
 ## 🔐 Environment Variables
 
+### Vercel Environment Variable Format
+Use the exact backend API URL without a trailing slash. The frontend now normalizes the value automatically, but this format is the safest and recommended one.
+
 ### 🖼️ Cloudinary Setup
 
 The application uses Cloudinary for reliable image hosting. To enable:
@@ -246,7 +240,7 @@ That's it! **No need to edit** - uses `/api` proxy for local development.
 
 **Production (Vercel)** - Set only in Vercel Dashboard:
 
-- Project Settings → Environment Variables
+- Project Settings → Environment Variables (ensure no trailing slash)
 - Add: `VITE_API_URL=https://your-render-backend.onrender.com/api`
 - Redeploy automatically uses this
 

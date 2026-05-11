@@ -1,6 +1,20 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import API from "../../utils/axios";
 
+const getApiBaseUrl = () => {
+  const rawBaseUrl = import.meta.env.VITE_API_URL?.trim();
+
+  if (!rawBaseUrl || rawBaseUrl === "/") return "/api";
+
+  const baseUrl = rawBaseUrl.replace(/\/+$/, "");
+
+  if (/^https?:\/\//i.test(baseUrl)) {
+    return baseUrl.endsWith("/api") ? baseUrl : `${baseUrl}/api`;
+  }
+
+  return baseUrl.startsWith("/") ? baseUrl : `/${baseUrl}`;
+};
+
 const buildQueryString = (params = {}) => {
   const searchParams = new URLSearchParams();
   Object.entries(params).forEach(([key, value]) => {
@@ -33,7 +47,7 @@ export const fetchProperties = createAsyncThunk(
   async (params = {}, { rejectWithValue }) => {
     try {
       const queryString = buildQueryString(params);
-      const apiUrl = import.meta.env.VITE_API_URL || "/api";
+      const apiUrl = getApiBaseUrl();
       const url = `${apiUrl}/properties${queryString ? `?${queryString}` : ""}`;
 
       return await fetchJson(url);
@@ -58,7 +72,7 @@ export const fetchProperty = createAsyncThunk(
   "properties/fetchOne",
   async (id, { rejectWithValue }) => {
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || "/api";
+      const apiUrl = getApiBaseUrl();
       const res = await fetchJson(`${apiUrl}/properties/${id}`);
       return res;
     } catch (err) {

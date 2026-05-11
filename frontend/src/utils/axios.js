@@ -1,17 +1,24 @@
 import axios from "axios";
 
 const getApiBaseUrl = () => {
-  const rawBaseUrl = import.meta.env.VITE_API_URL?.trim();
+  const envUrl = import.meta.env.VITE_API_URL?.trim();
 
-  if (!rawBaseUrl || rawBaseUrl === "/") return "/api";
-
-  const baseUrl = rawBaseUrl.replace(/\/+$/, "");
-
-  if (/^https?:\/\//i.test(baseUrl)) {
-    return baseUrl.endsWith("/api") ? baseUrl : `${baseUrl}/api`;
+  // If explicitly set in environment, use it
+  if (envUrl) {
+    const normalized = envUrl.replace(/\/+$/, "");
+    if (/^https?:\/\//i.test(normalized)) {
+      return normalized.endsWith("/api") ? normalized : `${normalized}/api`;
+    }
+    return normalized.startsWith("/") ? normalized : `/${normalized}`;
   }
 
-  return baseUrl.startsWith("/") ? baseUrl : `/${baseUrl}`;
+  // In development, use proxy
+  const isDev = import.meta.env.DEV;
+  if (isDev) return "/api";
+
+  // In production, default to Render backend
+  // Override with VITE_API_URL environment variable on Vercel
+  return "https://real-estate-management-system-rh4j.onrender.com/api";
 };
 
 const API = axios.create({

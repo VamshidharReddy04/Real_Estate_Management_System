@@ -2,17 +2,20 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import API from "../../utils/axios";
 
 const getApiBaseUrl = () => {
-  const rawBaseUrl = import.meta.env.VITE_API_URL?.trim();
+  const envUrl = import.meta.env.VITE_API_URL?.trim();
 
-  if (!rawBaseUrl || rawBaseUrl === "/") return "/api";
-
-  const baseUrl = rawBaseUrl.replace(/\/+$/, "");
-
-  if (/^https?:\/\//i.test(baseUrl)) {
-    return baseUrl.endsWith("/api") ? baseUrl : `${baseUrl}/api`;
+  if (envUrl) {
+    const normalized = envUrl.replace(/\/+$/, "");
+    if (/^https?:\/\//i.test(normalized)) {
+      return normalized.endsWith("/api") ? normalized : `${normalized}/api`;
+    }
+    return normalized.startsWith("/") ? normalized : `/${normalized}`;
   }
 
-  return baseUrl.startsWith("/") ? baseUrl : `/${baseUrl}`;
+  const isDev = import.meta.env.DEV;
+  if (isDev) return "/api";
+
+  return "https://real-estate-management-system-rh4j.onrender.com/api";
 };
 
 const buildQueryString = (params = {}) => {

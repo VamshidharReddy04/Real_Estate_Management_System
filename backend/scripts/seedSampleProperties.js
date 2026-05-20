@@ -14,23 +14,23 @@ async function seed() {
 
   const demoUsers = [
     {
-      name: "Demo User",
-      email: "demo@user.com",
-      password: "demo123",
+      name: "User",
+      email: "user@demo.com",
+      password: "User@123",
       role: "user",
       phone: "9000000001",
     },
     {
-      name: "Verified Agent",
-      email: "demo@agent.com",
-      password: "demo123",
+      name: "Agent",
+      email: "agent@demo.com",
+      password: "Agent@123",
       role: "agent",
       phone: "9000000002",
     },
     {
-      name: "Demo Admin",
-      email: "demo@admin.com",
-      password: "demo123",
+      name: "Admin",
+      email: "admin@demo.com",
+      password: "Admin@123",
       role: "admin",
       phone: "9000000003",
     },
@@ -40,7 +40,8 @@ async function seed() {
     let user = await User.findOne({ email: demo.email }).select("+password");
 
     if (!user) {
-      await User.create(demo);
+      const created = await User.create(demo);
+      console.log(`Created demo user: ${created.email} (role=${created.role})`);
       continue;
     }
 
@@ -50,9 +51,10 @@ async function seed() {
     user.isActive = true;
     user.password = demo.password;
     await user.save();
+    console.log(`Updated demo user: ${user.email} (role=${user.role})`);
   }
 
-  const agent = await User.findOne({ email: "demo@agent.com", role: "agent" });
+  const agent = await User.findOne({ email: "agent@demo.com", role: "agent" });
 
   if (!agent) {
     throw new Error("Demo agent user was not found after setup");

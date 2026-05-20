@@ -148,7 +148,7 @@ npm start
 cd ../frontend
 npm install
 cp .env.example .env.local
-npm run dev
+npm run dev:all
 # Frontend runs on http://localhost:5173 (or next available port)
 
 ### 4. Seed Sample Data (Optional)
@@ -171,7 +171,7 @@ After seeding, use these test accounts:
 | Agent | agent@demo.com | Agent@123 |
 | User  | user@demo.com  | User@123  |
 
-**Note:** Create these accounts manually in the app or update the seed script to create demo users.
+**Note:** Run `node scripts/seedSampleProperties.js` after configuring MongoDB to create these demo accounts automatically.
 
 ````
 
@@ -223,7 +223,7 @@ PORT=5000
 NODE_ENV=production
 JWT_SECRET=generate_a_random_string_minimum_32_characters
 JWT_EXPIRE=7d
-CLIENT_URL=https://your-vercel-frontend-url.vercel.app
+CLIENT_URL=https://real-estate-management-system-amber.vercel.app
 CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
@@ -286,10 +286,10 @@ npm run build    # Creates optimized build in dist/
 
 ## 🌐 Live Deployment
 
-| Component | Platform | URL                                                                           |
-| --------- | -------- | ----------------------------------------------------------------------------- |
-| Frontend  | Vercel   | https://real-estate-management-system-n-vamshidhar-reddys-projects.vercel.app |
-| Backend   | Render   | https://real-estate-management-system-rh4j.onrender.com                       |
+| Component | Platform | URL                                                     |
+| --------- | -------- | ------------------------------------------------------- |
+| Frontend  | Vercel   | https://real-estate-management-system-amber.vercel.app  |
+| Backend   | Render   | https://real-estate-management-system-rh4j.onrender.com |
 
 ## 📡 API Endpoints
 
@@ -359,7 +359,7 @@ npm run build    # Creates optimized build in dist/
    NODE_ENV=production
    JWT_SECRET=your-32-char-secret-key
    JWT_EXPIRE=7d
-   CLIENT_URL=https://your-frontend-url.vercel.app
+   CLIENT_URL=https://real-estate-management-system-amber.vercel.app
    CLOUDINARY_CLOUD_NAME=your_cloud_name
    CLOUDINARY_API_KEY=your_api_key
    CLOUDINARY_API_SECRET=your_api_secret
@@ -389,18 +389,18 @@ npm run build    # Creates optimized build in dist/
    ```
 
 4. **Deploy**: Click "Deploy" and wait (~2-3 min)
-5. **Copy URL**: Frontend now accessible at `https://your-project.vercel.app`
+5. **Copy URL**: Frontend now accessible at `https://real-estate-management-system-amber.vercel.app`
 
 ### 🔗 Final Steps
 
 1. **Update Backend URL**: In `backend/.env`, update:
 
    ```
-   CLIENT_URL=https://your-project.vercel.app
+   CLIENT_URL=https://real-estate-management-system-amber.vercel.app
    ```
 
 2. **Redeploy Backend**: Push changes or manually trigger redeploy in Render
-3. **Test**: Visit https://your-project.vercel.app and verify all features work
+3. **Test**: Visit https://real-estate-management-system-amber.vercel.app and verify all features work
 
 ---
 

@@ -6,10 +6,12 @@
   "scripts": {
     "install:all": "npm install --prefix backend && npm install --prefix frontend",
     "ports:free": "kill-port 5000 5173",
-    "dev": "npm run ports:free && concurrently -n backend,frontend -c yellow,cyan \"npm run dev --prefix backend\" \"npm run dev --prefix frontend -- --port 5173 --strictPort\"",
+    "dev": "npm run dev:all",
+    "dev:all": "npm run ports:free && concurrently -n backend,frontend -c yellow,cyan \"npm run dev --prefix backend\" \"npm run dev --prefix frontend -- --port 5173 --strictPort\"",
     "dev:backend": "npm run dev --prefix backend",
     "dev:frontend": "npm run dev --prefix frontend -- --port 5173 --strictPort",
     "build": "npm run build --prefix frontend",
+    "deploy:prod": "vercel deploy --prod --yes --non-interactive",
     "start": "npm run start --prefix backend"
   },
   "devDependencies": {

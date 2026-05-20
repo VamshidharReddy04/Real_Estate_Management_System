@@ -12,12 +12,7 @@ const getApiBaseUrl = () => {
     return normalized.startsWith("/") ? normalized : `/${normalized}`;
   }
 
-  // In development, use proxy
-  const isDev = import.meta.env.DEV;
-  if (isDev) return "/api";
-
-  // In production, default to Render backend
-  // Override with VITE_API_URL environment variable on Vercel
+  // Use Render backend URL for both dev and production
   return "https://real-estate-management-system-rh4j.onrender.com/api";
 };
 

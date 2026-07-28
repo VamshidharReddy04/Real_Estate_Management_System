@@ -38,6 +38,7 @@ app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 // Routes
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/properties", require("./routes/properties"));
+app.use("/api/properties", require("./routes/aiPropertyRoutes"));
 app.use("/api/wishlist", require("./routes/wishlist"));
 app.use("/api/inquiries", require("./routes/inquiries"));
 app.use("/api/admin", require("./routes/admin"));

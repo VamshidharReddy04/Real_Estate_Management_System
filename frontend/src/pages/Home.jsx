@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchProperties } from "../store/slices/propertySlice";
 import PropertyCard from "../components/PropertyCard";
 import SearchFilter from "../components/SearchFilter";
+import AIPropertySearch from "../components/AIPropertySearch";
 import {
   featuredCityImages,
   genericPropertyFallbackImage,
@@ -174,6 +175,10 @@ export default function Home() {
 
       {/* Main content */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="mb-8 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+          <AIPropertySearch />
+        </div>
+
         <SearchFilter onFilter={handleFilter} />
 
         <div

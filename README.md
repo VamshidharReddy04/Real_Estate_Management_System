@@ -6,6 +6,7 @@ A modern, full-stack real estate platform for buying, selling, and renting prope
 
 - **Property Listings**: Browse verified properties with detailed information, images, and pricing
 - **Advanced Search & Filters**: Search by location, type (apartment, house, villa, commercial), price range, and other criteria
+- **AI Property Assistant**: Ask natural-language questions like “2BHK under 50L in Gachibowli” and get filtered property results from the backend
 - **User Authentication**: Secure registration and login with JWT authentication
 - **Agent Dashboard**: Agents can add, edit, and manage their properties
 - **Admin Panel**: Administrators can approve/reject property listings
@@ -37,6 +38,7 @@ A modern, full-stack real estate platform for buying, selling, and renting prope
 - **Cloudinary** - Image hosting
 - **Multer** - File upload handling
 - **Multer Cloudinary Storage** - Direct cloud upload integration
+- **Anthropic Claude API** - Natural-language property search and query interpretation
 - **CORS** - Cross-origin requests
 
 ### Deployment
@@ -55,7 +57,8 @@ Real Estate Management System/
 │   │   │   ├── Navbar.jsx
 │   │   │   ├── Footer.jsx
 │   │   │   ├── PropertyCard.jsx
-│   │   │   └── SearchFilter.jsx
+│   │   │   ├── SearchFilter.jsx
+│   │   │   └── AIPropertySearch.jsx
 │   │   ├── pages/                # Page components
 │   │   │   ├── Home.jsx
 │   │   │   ├── Login.jsx
@@ -97,13 +100,15 @@ Real Estate Management System/
 │   │   ├── propertyController.js
 │   │   ├── inquiryController.js
 │   │   ├── wishlistController.js
-│   │   └── adminController.js
+│   │   ├── adminController.js
+│   │   └── aiPropertyController.js
 │   ├── routes/                   # API routes
 │   │   ├── auth.js
 │   │   ├── properties.js
 │   │   ├── inquiries.js
 │   │   ├── wishlist.js
-│   │   └── admin.js
+│   │   ├── admin.js
+│   │   └── aiPropertyRoutes.js
 │   ├── middleware/
 │   │   └── auth.js
 │   ├── server.js
@@ -144,14 +149,26 @@ npm start
 
 ### 3. Frontend Setup
 
-````bash
+```bash
 cd ../frontend
 npm install
 cp .env.example .env.local
-npm run dev:all
+npm run dev
 # Frontend runs on http://localhost:5173 (or next available port)
+```
 
-### 4. Seed Sample Data (Optional)
+### 4. AI Assistant Setup (Optional)
+
+To enable the natural-language property search feature, add your Anthropic API key to the backend environment file:
+
+```env
+# backend/.env
+ANTHROPIC_API_KEY=your_claude_api_key
+```
+
+Then restart the backend and visit the homepage to use the AI assistant.
+
+### 5. Seed Sample Data (Optional)
 
 To populate the database with sample properties:
 
@@ -159,19 +176,18 @@ To populate the database with sample properties:
 cd backend
 node scripts/seedSampleProperties.js
 # Output: Successfully seeded 12 properties
-````
+```
 
-### 5. Demo Account Credentials
+### 6. Demo Account Credentials
 
 After seeding, use these test accounts:
 
 **Note:** Run `node scripts/seedSampleProperties.js` after configuring MongoDB to create these demo accounts automatically.
 
-````
-
 ## 🔐 Environment Variables
 
 ### Vercel Environment Variable Format
+
 Use the exact backend API URL without a trailing slash. The frontend now normalizes the value automatically, but this format is the safest and recommended one.
 
 ### 🖼️ Cloudinary Setup
@@ -181,20 +197,21 @@ The application uses Cloudinary for reliable image hosting. To enable:
 1. **Create Cloudinary Account**: Sign up at [cloudinary.com](https://cloudinary.com) (free tier available)
 2. **Get Credentials**: Copy your Cloud Name, API Key, and API Secret from Dashboard
 3. **Add to Backend `.env`**:
-	 ```env
-	 CLOUDINARY_CLOUD_NAME=your_cloud_name
-	 CLOUDINARY_API_KEY=your_api_key
-	 CLOUDINARY_API_SECRET=your_api_secret
-	 ```
+   ```env
+   CLOUDINARY_CLOUD_NAME=your_cloud_name
+   CLOUDINARY_API_KEY=your_api_key
+   CLOUDINARY_API_SECRET=your_api_secret
+   ```
 4. **Automatic Image Handling**: When agents upload properties, images are automatically uploaded to Cloudinary
 
 **Image Storage Format**: All images stored as objects in MongoDB:
+
 ```json
 {
-	"url": "https://res.cloudinary.com/...",
-	"public_id": "cloud_public_identifier"
+  "url": "https://res.cloudinary.com/...",
+  "public_id": "cloud_public_identifier"
 }
-````
+```
 
 **Backward Compatibility**: The app automatically converts string URLs to Cloudinary format using `normalizeImages()` in the API.
 
@@ -221,6 +238,7 @@ CLIENT_URL=https://real-estate-management-system-amber.vercel.app
 CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
+ANTHROPIC_API_KEY=your_claude_api_key
 ```
 
 **Frontend** - Copy example to `.env.local`:
@@ -300,6 +318,7 @@ npm run build    # Creates optimized build in dist/
 - `PUT /api/properties/:id` - Update property (agents)
 - `DELETE /api/properties/:id` - Delete property (agents)
 - `PUT /api/properties/:id/approve` - Approve property (admin)
+- `POST /api/properties/ai-search` - Natural-language property search with AI filtering
 
 ### Wishlist
 
@@ -534,6 +553,7 @@ normalizeImages() ensures consistency
 
 - [ ] Browse all properties on home page
 - [ ] Search/filter by location and type
+- [ ] Use the AI assistant with prompts like “2BHK under 50L in Gachibowli”
 - [ ] Click property card to view details
 - [ ] Images load correctly from Cloudinary
 - [ ] Agent can add new property with images
@@ -631,3 +651,7 @@ MIT License - See LICENSE file for details
 ---
 
 **Ready to deploy? Follow the Quick Start guide above!** 🚀
+
+```
+
+```

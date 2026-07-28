@@ -165,12 +165,6 @@ node scripts/seedSampleProperties.js
 
 After seeding, use these test accounts:
 
-| Role  | Email          | Password  |
-| ----- | -------------- | --------- |
-| Admin | admin@demo.com | Admin@123 |
-| Agent | agent@demo.com | Agent@123 |
-| User  | user@demo.com  | User@123  |
-
 **Note:** Run `node scripts/seedSampleProperties.js` after configuring MongoDB to create these demo accounts automatically.
 
 ````
